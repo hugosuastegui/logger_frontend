@@ -14,10 +14,10 @@ function Scan() {
   useEffect(() => {
     if (result) {
       navigator.geolocation.getCurrentPosition(
-        ({ coords: { latitude, longitude } }) => {
+        async ({ coords: { latitude, longitude } }) => {
           const values = { latitude, longitude };
-          console.log("Attemp to create a log");
-          // await createLog(result, values);
+          console.log("Attempt to create a log");
+          await createLog(result, values);
         },
         setmessage("Geolocation permission is needed to get a valid log")
       );
