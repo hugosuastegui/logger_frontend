@@ -1,54 +1,53 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Form, Select, Input, Button, TimePicker, InputNumber } from "antd";
+import { Form, Select, Input, Button, InputNumber } from "antd";
 import MY_SERVICE from "../services/index";
-import mapboxgl from "mapbox-gl";
+// import mapboxgl from "mapbox-gl";
+import ReactMapGL, { Marker, GeolocateControl } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 const { createPoi } = MY_SERVICE;
 const { Option } = Select;
 
 const styles = {
-  width: "100%",
-  height: "40vh",
-  display: "block",
+  width: 15,
+  height: 15,
+  backgroundColor: "red",
+  borderRadius: "50%",
 };
+
+const mapboxToken =
+  "pk.eyJ1IjoiaHVnb3N1YXN0ZWd1aSIsImEiOiJja2VrdjJiN3UwZXIwMzFxeHgzYzI4aDY3In0.evgV3HHHH1Gf-uplaJyOow";
 
 function NewPoi({ history }) {
   const [weekdays, setweekdays] = useState([]);
   const [form] = Form.useForm();
-  const [map, setMap] = useState(null);
   const [lng, setLng] = useState(-100);
   const [lat, setLat] = useState(20);
-  const mapContainer = useRef(null);
+  const [viewport, setViewport] = useState({
+    longitude: lng,
+    latitude: lat,
+    width: "75vw",
+    height: "40vh",
+    zoom: 5,
+  });
 
   useEffect(() => {
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoiaHVnb3N1YXN0ZWd1aSIsImEiOiJja2VrdjJiN3UwZXIwMzFxeHgzYzI4aDY3In0.evgV3HHHH1Gf-uplaJyOow";
-    const initializeMap = ({ setMap, mapContainer }) => {
-      const map = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: "mapbox://styles/mapbox/streets-v11",
-        center: [lng, lat],
-        zoom: 2,
-      });
+    function setPos() {
+      setLat(viewport.latitude);
+      setLng(viewport.longitude);
+    }
 
-      map.dragRotate.disable();
-      map.touchZoomRotate.disableRotation();
-
-      function onClick() {
-        setLng(map.getCenter().lng.toFixed(4));
-        setLat(map.getCenter().lat.toFixed(4));
-      }
-
-      map.on("click", onClick);
-    };
-    if (!map) initializeMap({ setMap, mapContainer });
-  }, [map]);
+    // onDragEnd(e);
+    setPos();
+  }, [viewport]);
 
   const addWeekdays = (value) => {
     setweekdays([...weekdays, value]);
   };
 
   async function newPoi(values) {
+    values.longitude = lng;
+    values.latitude = lat;
     await createPoi(values);
     history.push("/pois");
   }
@@ -91,10 +90,26 @@ function NewPoi({ history }) {
             </Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Location" name="location">
-          <Input placeholder={`Longitude: ${lng}, Latitude: ${lat}`} />
+        <Form.Item label="Longitude" name="longitude">
+          <Input value={lng} placeholder={lng} />
         </Form.Item>
-        <div ref={(el) => (mapContainer.current = el)} style={styles} />
+        <Form.Item label="Latitude" name="latitude">
+          <Input value={lat} placeholder={lat} />
+        </Form.Item>
+        <br />
+        <ReactMapGL
+          mapboxApiAccessToken={mapboxToken}
+          {...viewport}
+          onViewportChange={(nextViewport) => setViewport(nextViewport)}
+        >
+          <GeolocateControl
+            positionOptions={{ enableHighAccuracy: true }}
+            trackUserLocation={true}
+          />
+          <Marker latitude={lat} longitude={lng}>
+            <center style={styles}></center>
+          </Marker>
+        </ReactMapGL>
         <br />
         <br />
         <br />

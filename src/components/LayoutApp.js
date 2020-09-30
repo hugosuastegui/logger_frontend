@@ -80,9 +80,9 @@ function LayoutApp({ children }) {
             {children}
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
+        {/* <Footer style={{ textAlign: "center" }}>
           Created by Hugo Suastegui
-        </Footer>
+        </Footer> */}
       </Layout>
     </Layout>
   );
