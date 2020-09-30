@@ -5,8 +5,10 @@ import { MyContext } from "../context.js";
 import { Link } from "react-router-dom";
 const { signup, login } = MY_SERVICE;
 
-let baseURL =
-  process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
+let baseURL;
+process.env.NODE_ENV === "production"
+  ? (baseURL = "https://ironlogger.herokuapp.com")
+  : (baseURL = "http://localhost:3000");
 
 const { Option } = Select;
 

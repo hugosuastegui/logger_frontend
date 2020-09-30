@@ -3,6 +3,13 @@ import { MyContext } from "../context";
 import MY_SERVICE from "../services/index";
 import { Redirect, Link } from "react-router-dom";
 import { Card, Tag, Button } from "antd";
+import QRCode from "qrcode.react";
+
+let baseURL;
+
+process.env.NODE_ENV === "production"
+  ? (baseURL = "https://ironlogger.herokuapp.com")
+  : (baseURL = "http://localhost:3000");
 
 const { getUserInfo } = MY_SERVICE;
 
@@ -35,7 +42,7 @@ function ShowPoIs() {
             extra={<Link to={`/pois/${poi._id}`}>More</Link>}
           >
             <p>{poi.location}</p>
-            <p>{poi.checkinTime}</p>
+            <QRCode value={`baseURL/logs/${poi._id}`} renderAs="svg" />
             <p>Weekdays:</p>
             {poi.weekdays.map((day, ind) => (
               <Tag key={ind}>{day}</Tag>
