@@ -42,7 +42,7 @@ function ShowPoIs() {
             extra={<Link to={`/pois/${poi._id}`}>More</Link>}
           >
             <p>{poi.location}</p>
-            <QRCode value={`baseURL/logs/${poi._id}`} renderAs="svg" />
+            <QRCode value={`${baseURL}/logs/${poi._id}`} renderAs="svg" />
             <p>Weekdays:</p>
             {poi.weekdays.map((day, ind) => (
               <Tag key={ind}>{day}</Tag>

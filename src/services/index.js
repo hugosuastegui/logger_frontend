@@ -48,8 +48,8 @@ const MY_SERVICE = {
   updateUser: async (user, values) => {
     return await service.put(`/users/${user}`, values);
   },
-  createLog: async (url) => {
-    return await service.post(url);
+  createLog: async (url, values) => {
+    return await service.post(url, values);
   },
 };
 
