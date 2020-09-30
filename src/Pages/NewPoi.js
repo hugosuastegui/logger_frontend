@@ -16,8 +16,8 @@ function NewPoi({ history }) {
   const [weekdays, setweekdays] = useState([]);
   const [form] = Form.useForm();
   const [map, setMap] = useState(null);
-  const [lng, setLng] = useState(0);
-  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(-100);
+  const [lat, setLat] = useState(20);
   const mapContainer = useRef(null);
 
   useEffect(() => {
@@ -28,32 +28,19 @@ function NewPoi({ history }) {
         container: mapContainer.current,
         style: "mapbox://styles/mapbox/streets-v11",
         center: [lng, lat],
-        zoom: 5,
+        zoom: 2,
       });
 
-      map.on("load", () => {
-        setMap(map);
-        map.resize();
-      });
+      map.dragRotate.disable();
+      map.touchZoomRotate.disableRotation();
 
-      map.on("move", () => {
-        // setMap({
-        //   lng: map.getCenter().lng.toFixed(4),
-        //   lat: map.getCenter().lat.toFixed(4),
-        //   zoom: map.getZoom().toFixed(2),
-        // });
+      function onClick() {
         setLng(map.getCenter().lng.toFixed(4));
         setLat(map.getCenter().lat.toFixed(4));
-        setMap({
-          container: mapContainer.current,
-          style: "mapbox://styles/mapbox/streets-v11",
-          center: [lng, lat],
-          zoom: 5,
-        });
-        map.resize();
-      });
-    };
+      }
 
+      map.on("click", onClick);
+    };
     if (!map) initializeMap({ setMap, mapContainer });
   }, [map]);
 
@@ -74,7 +61,7 @@ function NewPoi({ history }) {
           <Input />
         </Form.Item>
         <Form.Item label="Check-In Time" name="checkinTime">
-          <TimePicker format="HH:mm" minuteStep={5} />
+          <input type="time" name="checkinTime" />
         </Form.Item>
         <Form.Item label="Tolerance (minutes)" name="tolerance">
           <InputNumber min="0" defaultValue="5" />
@@ -108,6 +95,8 @@ function NewPoi({ history }) {
           <Input placeholder={`Longitude: ${lng}, Latitude: ${lat}`} />
         </Form.Item>
         <div ref={(el) => (mapContainer.current = el)} style={styles} />
+        <br />
+        <br />
         <br />
         <Form.Item>
           <Button type="primary" htmlType="submit">
