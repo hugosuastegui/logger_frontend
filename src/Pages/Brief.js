@@ -3,6 +3,7 @@ import { MyContext } from "../context";
 import { Redirect } from "react-router-dom";
 import { Button, Form, Input, Card, Tag, Typography } from "antd";
 import MY_SERVICE from "../services";
+import Badge from "../components/Badge";
 
 const { Title } = Typography;
 
@@ -34,7 +35,7 @@ const Brief = () => {
     }
     fetchInfo();
   }, []);
-  console.log(logs);
+
   const addEmployer = async (values) => {
     requestEmployer(values.employer);
     setmessage("Please wait to be validated");
@@ -67,30 +68,16 @@ const Brief = () => {
   return user ? (
     user.role === "employer" ? (
       <div>
-        <img
-          style={{ width: "5rem", borderRadius: "50%" }}
-          src={user.photo}
-          alt="UserPhoto"
-        />
+        <Badge user={user}></Badge>
         <br />
-        <br />
-        <h2>{user.email}</h2>
-        <br />
-        <Title level={2}>Share this code with collabs</Title>
+        <Title level={4}>Share the following code with collabs</Title>
         <p>{user._id}</p>
         <br />
         <br />
       </div>
     ) : (
       <div>
-        <img
-          style={{ width: "5rem", borderRadius: "50%" }}
-          src={user.photo}
-          alt="UserPhoto"
-        />
-        <br />
-        <br />
-        <h2>{user.email}</h2>
+        <Badge user={user}></Badge>
         <br />
         {user.employer === undefined ? (
           <Form
@@ -116,7 +103,7 @@ const Brief = () => {
           <></>
         )}
         <p>{message}</p>
-        <Title level={2}>Recent Logs</Title>
+        <Title level={4}>Recent Logs</Title>
         {logs ? (
           logs.map((log, ind) => (
             <Card

@@ -32,7 +32,8 @@ function Signup({ history }) {
   return (
     <div>
       <h2>Welcome!</h2>
-      <h3>Please Sign Up</h3>
+      <p>Logger sets punctuality going in your business</p>
+      <h3>Please Sign Up to continue</h3>
       <Form layout="vertical" name="basic" form={form} onFinish={signupProcess}>
         <Form.Item
           label="Email"

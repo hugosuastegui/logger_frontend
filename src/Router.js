@@ -10,8 +10,8 @@ import PoiDetail from "./Pages/PoiDetail";
 import NewPoi from "./Pages/NewPoi";
 import Collabs from "./Pages/Collabs";
 import Scan from "./Pages/Scan";
+import Settings from "./Pages/Settings";
 
-const Settings = () => <h1>Settings</h1>;
 const Employers = () => <h1>Employers</h1>;
 
 const Router = () => (
