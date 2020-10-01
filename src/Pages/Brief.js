@@ -1,10 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import { MyContext } from "../context";
 import { Redirect } from "react-router-dom";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Card } from "antd";
 import MY_SERVICE from "../services";
 
 const { getUserInfo, requestEmployer } = MY_SERVICE;
+
+const validStyles = {
+  color: "green",
+};
+
+const unvalidStyles = {
+  color: "red",
+};
 
 const Brief = () => {
   const [logs, setlogs] = useState(null);
@@ -24,7 +32,7 @@ const Brief = () => {
     }
     fetchInfo();
   }, []);
-
+  console.log(logs);
   const addEmployer = async (values) => {
     requestEmployer(values.employer);
     setmessage("Please wait to be validated");
@@ -83,13 +91,23 @@ const Brief = () => {
         )}
         <p>{message}</p>
         <h3>Recent Logs</h3>
-        <ul>
-          {logs ? (
-            logs.map((log, ind) => <li key={ind}>{log.location}</li>)
-          ) : (
-            <p>Loading</p>
-          )}
-        </ul>
+        {logs ? (
+          logs.map((log, ind) => (
+            <Card title={log.poi.name} style={{ marginTop: "5" }}>
+              <p>{log.createdAt}</p>
+              <p>
+                Valid:{" "}
+                {log.valid ? (
+                  <strong style={validStyles}>Validated</strong>
+                ) : (
+                  <strong style={unvalidStyles}>Not Validated</strong>
+                )}
+              </p>
+            </Card>
+          ))
+        ) : (
+          <h2>Loading</h2>
+        )}
       </div>
     )
   ) : (
