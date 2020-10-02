@@ -67,7 +67,7 @@ function LayoutApp({ children }) {
       <Layout>
         <Header>
           <div className="logo">
-            <h2 style={{ color: "white", fontFamily: "Roboto" }}>LOGGER</h2>
+            <h2 style={{ color: "white", fontFamily: "Roboto" }}>Logger</h2>
           </div>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>

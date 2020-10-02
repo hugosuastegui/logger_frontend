@@ -5,8 +5,10 @@ import MY_SERVICE from "../services";
 import { MyContext } from "../context.js";
 const { login } = MY_SERVICE;
 
-let baseURL =
-  process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
+let baseURL;
+process.env.NODE_ENV === "production"
+  ? (baseURL = "https://ironlogger.herokuapp.com")
+  : (baseURL = "http://localhost:3000");
 
 function Signup({ history }) {
   const [form] = Form.useForm();
