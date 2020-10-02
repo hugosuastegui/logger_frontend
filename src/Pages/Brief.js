@@ -51,10 +51,9 @@ const Brief = () => {
       setUnvalidatedCollabs(unvalidated);
       // ============== Collab Brief ================
       setlogs(collabLogs);
-      console.log(collabs);
     }
     fetchInfo();
-  }, []);
+  }, [logs]);
 
   const addEmployer = async (values) => {
     requestEmployer(values.employer);
@@ -150,40 +149,43 @@ const Brief = () => {
         <p>{message}</p>
         <Title level={4}>Recent Logs</Title>
         {logs ? (
-          logs.map((log, ind) => (
-            <Card
-              title={log.poi ? log.poi.name : "Dropped PoI"}
-              style={{ marginTop: 16 }}
-            >
-              <div style={{ marginBottom: 10 }}>
-                <Title level={5}>Check In by: {log.poi.checkinTime}</Title>
-                {log.poi.weekdays.map((tag, ind) => (
+          <div>
+            {logs.map((log, ind) => (
+              <Card
+                title={log.poi ? log.poi.name : "Dropped PoI"}
+                style={{ marginTop: 16 }}
+              >
+                <div style={{ marginBottom: 10 }}>
+                  <Title level={5}>Check In by: {log.poi.checkinTime}</Title>
+                  {log.poi.weekdays.map((tag, ind) => (
+                    <span>
+                      <Tag key={ind}>{tag}</Tag>
+                    </span>
+                  ))}
+                </div>
+                <div>
+                  <Title level={5}>Log Info</Title>
                   <span>
-                    <Tag key={ind}>{tag}</Tag>
+                    Day: {getTime(log.createdAt)[0]}
+                    {"  "}
                   </span>
-                ))}
-              </div>
-              <div>
-                <Title level={5}>Log Info</Title>
-                <span>
-                  Day: {getTime(log.createdAt)[0]}
-                  {"  "}
-                </span>
-                <span>|</span>
-                <span>
-                  Time: {getTime(log.createdAt)[1]}:{getTime(log.createdAt)[2]}
-                </span>
-              </div>
-              <p>
-                Valid:{" "}
-                {log.valid === true ? (
-                  <strong style={validStyles}>Validated</strong>
-                ) : (
-                  <strong style={unvalidStyles}>Not Validated</strong>
-                )}
-              </p>
-            </Card>
-          ))
+                  <span>|</span>
+                  <span>
+                    Time: {getTime(log.createdAt)[1]}:
+                    {getTime(log.createdAt)[2]}
+                  </span>
+                </div>
+                <p>
+                  Valid:{" "}
+                  {log.valid === true ? (
+                    <strong style={validStyles}>Validated</strong>
+                  ) : (
+                    <strong style={unvalidStyles}>Not Validated</strong>
+                  )}
+                </p>
+              </Card>
+            ))}
+          </div>
         ) : (
           <div>
             <h2>No logs to show</h2>
