@@ -53,7 +53,7 @@ const Brief = () => {
       setlogs(collabLogs);
     }
     fetchInfo();
-  }, [logs]);
+  }, [logs, user]);
 
   const addEmployer = async (values) => {
     requestEmployer(values.employer);
