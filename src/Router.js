@@ -12,8 +12,6 @@ import Collabs from "./Pages/Collabs";
 import Scan from "./Pages/Scan";
 import Settings from "./Pages/Settings";
 
-const Employers = () => <h1>Employers</h1>;
-
 const Router = () => (
   <BrowserRouter>
     <LayoutApp>
@@ -24,7 +22,6 @@ const Router = () => (
         <Route exact path="/scan" component={Scan} />
         <Route exact path="/settings" component={Settings} />
         <Route exact path="/collabs" component={Collabs} />
-        <Route exact path="/employers" component={Employers} />
         <Route exact path="/pois" component={ShowPoIs} />
         <Route exact path="/pois/new" component={NewPoi} />
         <Route exact path="/pois/:poiId" component={PoiDetail} />
