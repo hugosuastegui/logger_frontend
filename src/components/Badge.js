@@ -1,14 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+const imgStyle = {
+  width: "5rem",
+  height: "5rem",
+  objectFit: "cover",
+  borderRadius: "50%",
+};
+
 function Badge({ user }) {
   return (
     <div>
-      <img
-        style={{ width: "5rem", borderRadius: "50%" }}
-        src={user.photo}
-        alt="UserPhoto"
-      />
+      <img style={imgStyle} src={user.photo} alt="UserPhoto" />
       <br />
       <br />
       {user.name ? (

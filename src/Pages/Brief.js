@@ -4,6 +4,8 @@ import { Redirect } from "react-router-dom";
 import { Button, Form, Input, Card, Tag, Typography } from "antd";
 import MY_SERVICE from "../services";
 import Badge from "../components/Badge";
+import EmployerStat from "../components/EmployerStat";
+import CollabSummary from "../components/CollabSummary";
 
 const { Title } = Typography;
 
@@ -22,6 +24,9 @@ const Brief = () => {
   const { user } = useContext(MyContext);
   const [form] = Form.useForm();
   const [message, setmessage] = useState("");
+  const [collaborators, setCollaborators] = useState([]);
+  const [validatedCollabs, setValidatedCollabs] = useState([]);
+  const [unvalidatedCollabs, setUnvalidatedCollabs] = useState([]);
 
   useEffect(() => {
     async function fetchInfo() {
@@ -31,7 +36,22 @@ const Brief = () => {
         },
       } = await getUserInfo();
 
+      const {
+        data: {
+          user: { collabs },
+        },
+      } = await getUserInfo();
+
+      const unvalidated = collabs.filter((el) => !el.collabValidated);
+      const validated = collabs.filter((el) => el.collabValidated);
+
+      // ============== Employer Brief ================
+      setCollaborators(collabs);
+      setValidatedCollabs(validated);
+      setUnvalidatedCollabs(unvalidated);
+      // ============== Collab Brief ================
       setlogs(collabLogs);
+      console.log(collabs);
     }
     fetchInfo();
   }, []);
@@ -65,6 +85,18 @@ const Brief = () => {
     return [day, hour, min];
   }
 
+  collaborators.forEach((el) => {
+    el.unvalidLogs = 0;
+    for (var i = 0; i < el.collabLogs.length; ++i) {
+      if (el.collabLogs[i].valid === false) el.unvalidLogs++;
+    }
+
+    el.validLogs = 0;
+    for (var i = 0; i < el.collabLogs.length; ++i) {
+      if (el.collabLogs[i].valid === true) el.validLogs++;
+    }
+  });
+
   return user ? (
     user.role === "employer" ? (
       <div>
@@ -73,7 +105,20 @@ const Brief = () => {
         <Title level={4}>Share the following code with collabs</Title>
         <p>{user._id}</p>
         <br />
-        <br />
+        <EmployerStat
+          title="General"
+          description="The number of collaborators signed to your code "
+          success={`Accepted: ${validatedCollabs.length}`}
+          secondary={`Pending: ${unvalidatedCollabs.length}`}
+        ></EmployerStat>
+        {validatedCollabs.map((collab, ind) => (
+          <CollabSummary
+            photo={collab.photo}
+            title={collab.name ? collab.name : collab.email}
+            attendance={collab.validLogs}
+            absence={collab.unvalidLogs}
+          ></CollabSummary>
+        ))}
       </div>
     ) : (
       <div>

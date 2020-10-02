@@ -26,7 +26,8 @@ function Signup({ history }) {
   return !user ? (
     <div>
       <h2>Welcome!</h2>
-      <h3>Please Log In</h3>
+      <p>Logger sets punctuality going!</p>
+      <h3>Please Log In to continue</h3>
       <Form layout="vertical" name="basic" form={form} onFinish={loginProcess}>
         <Form.Item
           label="Email"

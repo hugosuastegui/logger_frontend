@@ -33,24 +33,35 @@ function Scan() {
     setresult(err);
   };
 
-  return !result ? (
-    <div>
-      <h2>Scan QR Code</h2>
-      <p>{message ? message : ""}</p>
-      <QrReader
-        delay={300}
-        onError={handleError}
-        onScan={handleScan}
-        style={{ width: "100%" }}
-      />
-      <p>{result}</p>
-    </div>
+  return user ? (
+    user.collabValidated ? (
+      !result ? (
+        <div>
+          <h2>Scan QR Code</h2>
+          <p>{message ? message : ""}</p>
+          <QrReader
+            delay={300}
+            onError={handleError}
+            onScan={handleScan}
+            style={{ width: "100%" }}
+          />
+          <p>{result}</p>
+        </div>
+      ) : (
+        <>
+          <h1 style={{ color: "green" }}>Scan Made</h1>
+          <p>Please check geolocation permission is allowed</p>
+          {setTimeout(<Redirect to="/" />, 3000)}
+        </>
+      )
+    ) : (
+      <div>
+        <h2>Scan QR Code</h2>
+        <p>Only validated collabs can Scan</p>
+      </div>
+    )
   ) : (
-    <>
-      <h1>Scan Made</h1>
-      <p>Please check geolocation permission is allowed</p>
-      {/* <Redirect to="/login" /> */}
-    </>
+    <Redirect to="/login" />
   );
 }
 
