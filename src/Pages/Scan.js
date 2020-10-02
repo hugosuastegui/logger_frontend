@@ -51,7 +51,7 @@ function Scan() {
         <>
           <h1 style={{ color: "green" }}>Scan Made</h1>
           <p>Please check geolocation permission is allowed</p>
-          {setTimeout(<Redirect to="/" />, 3000)}
+          <Redirect to="/" />
         </>
       )
     ) : (

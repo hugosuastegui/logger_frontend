@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Form, Select, Input, Button, InputNumber } from "antd";
 import MY_SERVICE from "../services/index";
-// import mapboxgl from "mapbox-gl";
 import ReactMapGL, { Marker, GeolocateControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
