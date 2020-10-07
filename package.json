@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@react-pdf/renderer": "^1.6.11",
     "antd": "^4.6.5",
     "axios": "^0.19.2",
     "mapbox-gl": "^1.12.0",

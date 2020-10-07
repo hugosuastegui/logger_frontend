@@ -11,6 +11,7 @@ import NewPoi from "./Pages/NewPoi";
 import Collabs from "./Pages/Collabs";
 import Scan from "./Pages/Scan";
 import Settings from "./Pages/Settings";
+import showQrCode from "./Pages/showQrCode";
 
 const Router = () => (
   <BrowserRouter>
@@ -25,6 +26,7 @@ const Router = () => (
         <Route exact path="/pois" component={ShowPoIs} />
         <Route exact path="/pois/new" component={NewPoi} />
         <Route exact path="/pois/:poiId" component={PoiDetail} />
+        <Route exact path="/pois/:poiId/qrcode" component={showQrCode} />
         <Route component={NotFound} />
       </Switch>
     </LayoutApp>
