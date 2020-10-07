@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button, Input } from "antd";
 import { MyContext } from "../context";
 import { Redirect } from "react-router-dom";
 import MY_SERVICE from "../services/index";
 import axios from "axios";
-import { useForm } from "antd/lib/form/Form";
 
 import Badge from "../components/Badge";
 
-const { getUserInfo, updateUser } = MY_SERVICE;
+const { updateUser } = MY_SERVICE;
 
 function Settings({ history }) {
   const { user } = useContext(MyContext);

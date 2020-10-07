@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Select, Input, Button, InputNumber } from "antd";
 import MY_SERVICE from "../services/index";
 import ReactMapGL, { Marker, GeolocateControl } from "react-map-gl";

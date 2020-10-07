@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Select, Input, Button, TimePicker, InputNumber } from "antd";
 import MY_SERVICE from "../services/index";
 
-const { getPoi, updatePoi } = MY_SERVICE;
+const { getPoi, updatePoi, deletePoi } = MY_SERVICE;
 const { Option } = Select;
 
 function PoiDetail({
@@ -35,6 +35,11 @@ function PoiDetail({
     history.push("/pois");
   }
 
+  async function removePoi() {
+    await deletePoi(poi._id);
+    history.push("/pois");
+  }
+
   return poi ? (
     <div>
       <h2>{poi.name}</h2>
@@ -42,14 +47,17 @@ function PoiDetail({
         <Form.Item label="Name" name="name">
           <Input placeholder={poi.name} />
         </Form.Item>
-        <Form.Item label="Location" name="location">
-          <Input placeholder={poi.location} />
+        <Form.Item label="Longitude" name="location">
+          <Input placeholder={poi.longitude} />
+        </Form.Item>
+        <Form.Item label="Latitude" name="location">
+          <Input placeholder={poi.latitude} />
         </Form.Item>
         <Form.Item label="Check-In Time" name="checkinTime">
           <TimePicker format="HH:mm" minuteStep={5} />
         </Form.Item>
         <Form.Item label="Tolerance (minutes)" name="tolerance">
-          <InputNumber min="0" defaultValue="5" placeholder={poi.tolerance} />
+          <InputNumber min="0" initialValues="5" placeholder={poi.tolerance} />
         </Form.Item>
         <Form.Item label="Weekdays" name="weekdays">
           <Select
@@ -88,6 +96,9 @@ function PoiDetail({
         </Form.Item>
       </Form>
       <br />
+      <Button type="danger" onClick={() => removePoi()}>
+        Delete Point of Interest
+      </Button>
     </div>
   ) : (
     <h2>Loading...</h2>

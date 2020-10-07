@@ -1,4 +1,3 @@
-import { useForm } from "antd/lib/form/Form";
 import axios from "axios";
 let baseURL;
 
@@ -50,6 +49,9 @@ const MY_SERVICE = {
   },
   createLog: async (url, values) => {
     return await service.post(url, values);
+  },
+  deletePoi: async (poi) => {
+    return await service.delete(`/pois/${poi}`);
   },
 };
 

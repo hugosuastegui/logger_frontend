@@ -17,6 +17,7 @@ function Scan() {
         async ({ coords: { latitude, longitude } }) => {
           const values = { latitude, longitude };
           console.log("Attempt to create a log");
+          console.log(result);
           await createLog(result, values);
         },
         setmessage("Geolocation permission is needed to get a valid log")

@@ -14,7 +14,7 @@ import MY_SERVICE from "../services";
 import { MyContext } from "../context.js";
 
 const { logOut } = MY_SERVICE;
-const { Sider, Header, Content, Footer } = Layout;
+const { Sider, Header, Content } = Layout;
 
 function LayoutApp({ children }) {
   const { clearCtxUser, user } = useContext(MyContext);
@@ -78,9 +78,6 @@ function LayoutApp({ children }) {
             {children}
           </div>
         </Content>
-        {/* <Footer style={{ textAlign: "center" }}>
-          Created by Hugo Suastegui
-        </Footer> */}
       </Layout>
     </Layout>
   );

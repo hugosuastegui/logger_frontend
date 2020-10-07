@@ -53,7 +53,7 @@ const Brief = () => {
       setlogs(collabLogs);
     }
     fetchInfo();
-  }, [logs, user]);
+  }, [logs]);
 
   const addEmployer = async (values) => {
     requestEmployer(values.employer);
@@ -86,12 +86,12 @@ const Brief = () => {
 
   collaborators.forEach((el) => {
     el.unvalidLogs = 0;
-    for (var i = 0; i < el.collabLogs.length; ++i) {
+    for (let i = 0; i < el.collabLogs.length; ++i) {
       if (el.collabLogs[i].valid === false) el.unvalidLogs++;
     }
 
     el.validLogs = 0;
-    for (var i = 0; i < el.collabLogs.length; ++i) {
+    for (let i = 0; i < el.collabLogs.length; ++i) {
       if (el.collabLogs[i].valid === true) el.validLogs++;
     }
   });
@@ -112,6 +112,7 @@ const Brief = () => {
         ></EmployerStat>
         {validatedCollabs.map((collab, ind) => (
           <CollabSummary
+            key={ind}
             photo={collab.photo}
             title={collab.name ? collab.name : collab.email}
             attendance={collab.validLogs}
@@ -152,6 +153,7 @@ const Brief = () => {
           <div>
             {logs.map((log, ind) => (
               <Card
+                key={ind}
                 title={log.poi ? log.poi.name : "Dropped PoI"}
                 style={{ marginTop: 16 }}
               >
